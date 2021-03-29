@@ -1,0 +1,17 @@
+.player-setup{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.player-setup-header{
+    font-weight: bold;
+}
+.name-input{
+    padding-right: 20px;
+}
+.mana-symbol{
+    width: 50px;
+    height: 50px;
+}

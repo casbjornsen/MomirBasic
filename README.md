@@ -1,3 +1,65 @@
+## DESIGN
+
+Landing page where players input names and land count
+-  Limited to 60 land
+-  One input for each land type
+-  Valiation before game start
+-  Start game button that will go to the actual game page
+   -  Need to pass forward:
+      -  Number of players
+      -  Name and deck composition for each player
+
+Game page
+- Should contain one player interface for each player
+  - Start with one for POC
+  - Stretch: Add second instance with button to flip interface orientation vertically (e.g. for two players playing on a tablet)
+Player Interface
+- Life counter
+  - Starts at 24
+  - Increment and decrement buttons
+- Battlefield zone to hold token creature cards
+- Land zone to hold lands in play
+- Library zone to hold land deck
+  - Randomized at game start
+  - Clicking should transfer card from libary to hand
+  - Stretch: Tutor modal for when specific lands need to be searched out of deck
+  - Stretch: Button to shuffle
+- Hand zone to hold drawn lands
+  - Clicking a land in the hand should transfer it to the land zone
+- Mana pool tracker
+  - Manually increment/decrement mana of each color + colorless via buttons
+  - Clear pool button
+  - Stretch: have tapping lands automatically add the correct mana to the pool
+- Momir Vig button to call API and add token creature to battlefield
+- Graveyard for discarded/destroyed lands
+- Stretch: Create token modal
+  - Inputs: Name, power, toughness, quantity, stretch: abilities
+  - Ability to click a button to show modal where generated tokens (e.g. from Myr Battlesphere or Deranged Hermit) can be searched for and created
+  - Should search API based on parameters and create N tokens where N is quantity
+
+
+Reusable Components
+- CardZone
+  - Hand, Lands in Play, Battlefield
+  - All cards face up
+- CardStack
+  - Library, Graveyard
+  - Top card could be revealed or not
+  - Clicking should expand contents to enable zone transfer
+    - e.g. tutor: Library -> Hand or Oracle or Library -> Lands in Play
+- PlayerInterface 
+  - Replicated for each player
+
+All Cards
+- Click should toggle tap/untap and rotate the card image 90 degrees clockwise/counter-clockwise respectively
+- Contain an image of the card
+Token Creatures
+- Need to have button that destroys on click
+Land
+- Need to be able to transfer from one zone to another
+- Can have static front/back images for each basic land type
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

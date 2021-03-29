@@ -1,0 +1,229 @@
+.battlefield{
+    height: 66%;
+    background-color: darkgray;
+}
+
+.battlefield-creatures{
+    outline: 1px solid black;
+    height: 65%;
+}
+
+.battlefield-land{
+    height: 35%;
+    margin-left: 20px;
+}
+
+.cardZone{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.card{
+    position:relative;
+}
+
+.card img{
+    width: 8vw;
+    height: 11.2vw;
+    padding: 5px;
+}
+
+.card-options-modal{
+    color:white;
+    position: absolute;
+    top: 40vh;
+    left: 40vw;
+    right: 40vw;
+    bottom: 40vh;
+    background: rgba(128, 128, 128, 1);
+    border-radius: 4px;
+}
+
+.card-options-modal button{
+    width:80%;
+}
+
+.card-options-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.hand{
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 65%
+}
+
+.hidden{
+    display:none;
+}
+
+.land-row-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.life-button-container{
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.life-button-container button{
+    width: 50px;
+    height: 50px;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+}
+
+.life-display{
+    position: relative;
+    width: 100px;
+    height: 100px;
+    font-size: 32px;
+    text-align: center;
+}
+
+.life-display-text{
+    color: white;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    padding-bottom: 5px;
+    text-shadow: 2px 2px 0px black;
+}
+
+.life-tracker-container{
+    z-index: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+.mana-count{
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-55%, -55%);
+    text-shadow: 2px 2px 0px black, -2px -2px 0px  black, 2px -2px 0px  black, -2px 2px 0px  black;
+}
+
+.mana-count-container{
+    position: relative;
+    text-align: center;
+}
+
+.mana-count-container img{
+    width:35px;
+    height:35px;
+}
+
+.mana-pool-container{
+    z-index: 2;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.mana-tracker-container button{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+}
+
+.modal-button-container{
+    display:flex;
+    height:100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center
+}
+
+.momir-container{
+    display:flex;
+    flex-direction: row;
+}
+
+.momir-input{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding-top: 10px;
+}
+
+.momir-input input{
+    width:20%
+}
+
+.momir-input-container{
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 8vw;
+    text-align:left;
+    padding-left: 4px;
+    padding-right: 4px;
+    border-radius: 4px;
+    display:flex;
+    flex-direction: column;
+}
+
+.momir-rules{
+    height:80%;
+    background-color: white;
+}
+
+.options-button{
+    transition-duration: 0.2s;
+    opacity: 0.3;
+    background-color: lightgray;
+    color:black;
+    border-radius: 2px;
+    border: none;
+    position: absolute;
+    top: 8px;
+    right: 12px;
+}
+
+.options-button:hover{
+    opacity: 1;
+}
+
+.playerInterface{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+}
+
+.playerSpace{
+    height: 33%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: darkgreen;
+}
+
+.playerStats{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.tapped img{
+    transform: rotate(90deg)
+}
