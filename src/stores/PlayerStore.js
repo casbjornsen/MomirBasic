@@ -44,75 +44,10 @@ export const decrementLife = () => (
     }
 )
 
-export const incrementWMana = () => (
+export const updateMana = (manaUpdate) => (
     {
-        type: 'INCREMENT_W_MANA'
-    }
-)
-
-export const incrementUMana = () => (
-    {
-        type: 'INCREMENT_U_MANA'
-    }
-)
-
-export const incrementBMana = () => (
-    {
-        type: 'INCREMENT_B_MANA'
-    }
-)
-
-export const incrementRMana = () => (
-    {
-        type: 'INCREMENT_R_MANA'
-    }
-)
-
-export const incrementGMana = () => (
-    {
-        type: 'INCREMENT_G_MANA'
-    }
-)
-
-export const incrementCMana = () => (
-    {
-        type: 'INCREMENT_C_MANA'
-    }
-)
-
-export const decrementWMana = () => (
-    {
-        type: 'DECREMENT_W_MANA'
-    }
-)
-
-export const decrementUMana = () => (
-    {
-        type: 'DECREMENT_U_MANA'
-    }
-)
-
-export const decrementBMana = () => (
-    {
-        type: 'DECREMENT_B_MANA'
-    }
-)
-
-export const decrementRMana = () => (
-    {
-        type: 'DECREMENT_R_MANA'
-    }
-)
-
-export const decrementGMana = () => (
-    {
-        type: 'DECREMENT_G_MANA'
-    }
-)
-
-export const decrementCMana = () => (
-    {
-        type: 'DECREMENT_C_MANA'
+        type: 'UPDATE_MANA',
+        payload: manaUpdate
     }
 )
 
@@ -243,174 +178,18 @@ const reducer = (state = defaultState, action) => {
                 lifeTotal: state.lifeTotal-1
             }
         }
-        case 'INCREMENT_W_MANA':
-        {
+
+        case 'UPDATE_MANA':{
+            const manaPool = {
+                ...state.manaPool,
+                ...action.payload
+            }
             return{
                 ...state,
-                manaPool:{
-                    white: state.manaPool.white+1,
-                    blue: state.manaPool.blue,
-                    black: state.manaPool.black,
-                    red: state.manaPool.red,
-                    green: state.manaPool.green,
-                    colorless: state.manaPool.colorless
-                }
+                manaPool
             }
         }
-        case 'INCREMENT_U_MANA':
-        {
-            return{
-                ...state,
-                manaPool:{
-                    white: state.manaPool.white,
-                    blue: state.manaPool.blue+1,
-                    black: state.manaPool.black,
-                    red: state.manaPool.red,
-                    green: state.manaPool.green,
-                    colorless: state.manaPool.colorless
-                }
-            }
-        }
-        case 'INCREMENT_B_MANA':
-        {
-            return{
-                ...state,
-                manaPool:{
-                    white: state.manaPool.white,
-                    blue: state.manaPool.blue,
-                    black: state.manaPool.black+1,
-                    red: state.manaPool.red,
-                    green: state.manaPool.green,
-                    colorless: state.manaPool.colorless
-                }
-            }
-        }
-        case 'INCREMENT_R_MANA':
-        {
-            return{
-                ...state,
-                manaPool:{
-                    white: state.manaPool.white,
-                    blue: state.manaPool.blue,
-                    black: state.manaPool.black,
-                    red: state.manaPool.red+1,
-                    green: state.manaPool.green,
-                    colorless: state.manaPool.colorless
-                }
-            }
-        }
-        case 'INCREMENT_G_MANA':
-        {
-            return{
-                ...state,
-                manaPool:{
-                    white: state.manaPool.white,
-                    blue: state.manaPool.blue,
-                    black: state.manaPool.black,
-                    red: state.manaPool.red,
-                    green: state.manaPool.green+1,
-                    colorless: state.manaPool.colorless
-                }
-            }
-        }
-        case 'INCREMENT_C_MANA':
-        {
-            return{
-                ...state,
-                manaPool:{
-                    white: state.manaPool.white,
-                    blue: state.manaPool.blue,
-                    black: state.manaPool.black,
-                    red: state.manaPool.red,
-                    green: state.manaPool.green,
-                    colorless: state.manaPool.colorless+1
-                }
-            }
-        }
-        case 'DECREMENT_W_MANA':
-        {
-            return{
-                ...state,
-                manaPool:{
-                    white: Math.max(0, state.manaPool.white-1),
-                    blue: state.manaPool.blue,
-                    black: state.manaPool.black,
-                    red: state.manaPool.red,
-                    green: state.manaPool.green,
-                    colorless: state.manaPool.colorless
-                }
-            }
-        }
-        case 'DECREMENT_U_MANA':
-        {
-            return{
-                ...state,
-                manaPool:{
-                    white: state.manaPool.white,
-                    blue: Math.max(0, state.manaPool.blue-1),
-                    black: state.manaPool.black,
-                    red: state.manaPool.red,
-                    green: state.manaPool.green,
-                    colorless: state.manaPool.colorless
-                }
-            }
-        }
-        case 'DECREMENT_B_MANA':
-        {
-            return{
-                ...state,
-                manaPool:{
-                    white: state.manaPool.white,
-                    blue: state.manaPool.blue,
-                    black: Math.max(0, state.manaPool.black-1),
-                    red: state.manaPool.red,
-                    green: state.manaPool.green,
-                    colorless: state.manaPool.colorless
-                }
-            }
-        }
-        case 'DECREMENT_R_MANA':
-        {
-            return{
-                ...state,
-                manaPool:{
-                    white: state.manaPool.white,
-                    blue: state.manaPool.blue,
-                    black: state.manaPool.black,
-                    red: Math.max(0, state.manaPool.red-1),
-                    green: state.manaPool.green,
-                    colorless: state.manaPool.colorless
-                }
-            }
-        }
-        case 'DECREMENT_G_MANA':
-        {
-            return{
-                ...state,
-                manaPool:{
-                    white: state.manaPool.white,
-                    blue: state.manaPool.blue,
-                    black: state.manaPool.black,
-                    red: state.manaPool.red,
-                    green: Math.max(0, state.manaPool.green-1),
-                    colorless: state.manaPool.colorless
-                }
-            }
-        }
-        case 'DECREMENT_C_MANA':
-        {
-            return{
-                ...state,
-                manaPool:{
-                    white: state.manaPool.white,
-                    blue: state.manaPool.blue,
-                    black: state.manaPool.black,
-                    red: state.manaPool.red,
-                    green: state.manaPool.green,
-                    colorless: Math.max(0, state.manaPool.colorless-1)
-                }
-            }
-        }
+
         case 'TOGGLE_TAP_CARD':
         {
             switch(action.payload.zone){
@@ -706,18 +485,7 @@ export default{
     shuffleLibrary,
     incrementLife,
     decrementLife,
-    incrementWMana,
-    incrementUMana,
-    incrementBMana,
-    incrementRMana,
-    incrementGMana,
-    incrementCMana,
-    decrementWMana,
-    decrementUMana,
-    decrementBMana,
-    decrementRMana,
-    decrementGMana,
-    decrementCMana,
+    updateMana,
     toggleTapCard,
     sendCardToZone,
     fetchCreatureToken,

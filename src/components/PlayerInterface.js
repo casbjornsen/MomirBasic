@@ -27,52 +27,8 @@ function PlayerInterface (props) {
         props.onDecrementLife();
     }
 
-    const onIncrementWMana = () => {
-        props.onIncrementWMana();
-    }
-
-    const onIncrementUMana = () => {
-        props.onIncrementUMana();
-    }
-
-    const onIncrementBMana = () => {
-        props.onIncrementBMana();
-    }
-    
-    const onIncrementRMana = () => {
-        props.onIncrementRMana();
-    }
-    
-    const onIncrementGMana = () => {
-        props.onIncrementGMana();
-    }
-    
-    const onIncrementCMana = () => {
-        props.onIncrementCMana();
-    }
-
-    const onDecrementWMana = () => {
-        props.onDecrementWMana();
-    }
-
-    const onDecrementUMana = () => {
-        props.onDecrementUMana();
-    }
-
-    const onDecrementBMana = () => {
-        props.onDecrementBMana();
-    }
-    
-    const onDecrementRMana = () => {
-        props.onDecrementRMana();
-    }
-    
-    const onDecrementGMana = () => {
-        props.onDecrementGMana();
-    }
-    
-    const onDecrementCMana = () => {
-        props.onDecrementCMana();
+    const onUpdateMana = (newMana) => {
+        props.onUpdateMana(newMana);
     }
 
     const playLand = (index) => {
@@ -167,24 +123,13 @@ function PlayerInterface (props) {
                         onLifeDecrementClick = {onLifeDecrementClick}
                     />
                     <ManaPool
-                        wManaCount={props.manaPool.white}
-                        uManaCount={props.manaPool.blue}
-                        bManaCount={props.manaPool.black}
-                        rManaCount={props.manaPool.red}
-                        gManaCount={props.manaPool.green}
-                        cManaCount={props.manaPool.colorless}
-                        incrementWMana = {onIncrementWMana}
-                        incrementUMana = {onIncrementUMana}
-                        incrementBMana = {onIncrementBMana}
-                        incrementRMana = {onIncrementRMana}
-                        incrementGMana = {onIncrementGMana}
-                        incrementCMana = {onIncrementCMana}
-                        decrementWMana = {onDecrementWMana}
-                        decrementUMana = {onDecrementUMana}
-                        decrementBMana = {onDecrementBMana}
-                        decrementRMana = {onDecrementRMana}
-                        decrementGMana = {onDecrementGMana}
-                        decrementCMana = {onDecrementCMana}/>
+                        white={props.manaPool.white}
+                        blue={props.manaPool.blue}
+                        black={props.manaPool.black}
+                        red={props.manaPool.red}
+                        green={props.manaPool.green}
+                        colorless={props.manaPool.colorless}
+                        onUpdateMana={onUpdateMana}/>
                 </div>
                 <CardZone name="hand" cards={handEls}/>
                 <CardStack name="library" contents={props.library} isTopRevealed={false} onClick={drawCard} onOptionsClick={onOptionsClick}/>
@@ -211,18 +156,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         onIncrementLife: () => dispatch(PlayerStore.incrementLife()),
         onDecrementLife: () => dispatch(PlayerStore.decrementLife()),
-        onIncrementWMana: () => dispatch(PlayerStore.incrementWMana()),
-        onIncrementUMana: () => dispatch(PlayerStore.incrementUMana()),
-        onIncrementBMana: () => dispatch(PlayerStore.incrementBMana()),
-        onIncrementRMana: () => dispatch(PlayerStore.incrementRMana()),
-        onIncrementGMana: () => dispatch(PlayerStore.incrementGMana()),
-        onIncrementCMana: () => dispatch(PlayerStore.incrementCMana()),
-        onDecrementWMana: () => dispatch(PlayerStore.decrementWMana()),
-        onDecrementUMana: () => dispatch(PlayerStore.decrementUMana()),
-        onDecrementBMana: () => dispatch(PlayerStore.decrementBMana()),
-        onDecrementRMana: () => dispatch(PlayerStore.decrementRMana()),
-        onDecrementGMana: () => dispatch(PlayerStore.decrementGMana()),
-        onDecrementCMana: () => dispatch(PlayerStore.decrementCMana()),
+        onUpdateMana: (mana) => dispatch(PlayerStore.updateMana(mana)),
         onPlayLand: (index) => dispatch(PlayerStore.playLandFromHand(index)),
         onDrawCard: () => dispatch(PlayerStore.drawCardsFromLibrary(1)),
         onToggleTap: (index, zone) => dispatch(PlayerStore.toggleTapCard(index, zone)),
