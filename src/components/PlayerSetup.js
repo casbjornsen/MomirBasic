@@ -24,6 +24,50 @@ function PlayerSetup(props) {
         props.onChange(landCount, playerName);
     }
 
+    const landInputs = [
+        {
+            name: "Plains",
+            image: CardService.wSymbolImage,
+            onChange: (e) => setLandCount({...landCount, plains: e.target.value}),
+        },
+        {
+            name: "Islands",
+            image: CardService.uSymbolImage,
+            onChange: (e) => setLandCount({...landCount, islands: e.target.value}),
+        },
+        {
+            name: "Swamps",
+            image: CardService.bSymbolImage,
+            onChange: (e) => setLandCount({...landCount, swamps: e.target.value}),
+        },
+        {
+            name: "Mountains",
+            image: CardService.rSymbolImage,
+            onChange: (e) => setLandCount({...landCount, mountains: e.target.value}),
+        },
+        {
+            name: "Forests",
+            image: CardService.gSymbolImage,
+            onChange: (e) => setLandCount({...landCount, forests: e.target.value}),
+        },
+        {
+            name: "Wastes",
+            image: CardService.cSymbolImage,
+            onChange: (e) => setLandCount({...landCount, wastes: e.target.value}),
+        }
+    ]
+
+    const landInputEls = landInputs.map((x, idx) => {
+        return <ImageInput
+        imgSrc={x.image}
+        imgAlt={x.name}
+        inputType="number"
+        min="0"
+        max="60"
+        onChange={x.onChange}
+        className="mana-symbol" />
+    });
+    
     return (
         <div>
             <div className="player-setup-header">Please input your name and the number of lands you would like in your deck (60 total):</div>
@@ -33,62 +77,8 @@ function PlayerSetup(props) {
                 labelText="Player Name:" 
                 inputType="text"
                 onChange={(e) => setPlayerName(e.target.value)}
-                className="name-input"
-                />
-                <ImageInput
-                imgSrc={CardService.wSymbolImage}
-                imgAlt="Plains"
-                inputType="number"
-                min="0"
-                max="60"
-                onChange={(e) => setLandCount({...landCount, plains: e.target.value})}
-                className="mana-symbol"
-                />
-                <ImageInput
-                imgSrc={CardService.uSymbolImage}
-                imgAlt="Islands"
-                inputType="number"
-                min="0"
-                max="60"
-                onChange={(e) => setLandCount({...landCount, islands: e.target.value})}
-                className="mana-symbol"
-                />
-                <ImageInput
-                imgSrc={CardService.bSymbolImage}
-                imgAlt="Swamps"
-                inputType="number"
-                min="0"
-                max="60"
-                onChange={(e) => setLandCount({...landCount, swamps: e.target.value})}
-                className="mana-symbol"
-                />
-                <ImageInput
-                imgSrc={CardService.rSymbolImage}
-                imgAlt="Mountains"
-                inputType="number"
-                min="0"
-                max="60"
-                onChange={(e) => setLandCount({...landCount, mountains: e.target.value})}
-                className="mana-symbol"
-                />
-                <ImageInput
-                imgSrc={CardService.gSymbolImage}
-                imgAlt="Forests"
-                inputType="number"
-                min="0"
-                max="60"
-                onChange={(e) => setLandCount({...landCount, forests: e.target.value})}
-                className="mana-symbol"
-                />
-                <ImageInput
-                imgSrc={CardService.cSymbolImage}
-                imgAlt="Wastes"
-                inputType="number"
-                min="0"
-                max="60"
-                onChange={(e) => setLandCount({...landCount, wastes: e.target.value})}
-                className="mana-symbol"
-                />
+                className="name-input"/>
+                {landInputEls}
             </div>
             <Link to="/play">
                 <button type="button" onClick={onStartGame}>Start Game!</button>
