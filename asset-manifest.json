@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/MomirBasic/static/css/main.3a3e5a6f.chunk.css",
+    "main.js": "/MomirBasic/static/js/main.8aa4608b.chunk.js",
+    "main.js.map": "/MomirBasic/static/js/main.8aa4608b.chunk.js.map",
+    "runtime-main.js": "/MomirBasic/static/js/runtime-main.dac82e02.js",
+    "runtime-main.js.map": "/MomirBasic/static/js/runtime-main.dac82e02.js.map",
+    "static/js/2.f682ce06.chunk.js": "/MomirBasic/static/js/2.f682ce06.chunk.js",
+    "static/js/2.f682ce06.chunk.js.map": "/MomirBasic/static/js/2.f682ce06.chunk.js.map",
+    "static/js/3.fb035eae.chunk.js": "/MomirBasic/static/js/3.fb035eae.chunk.js",
+    "static/js/3.fb035eae.chunk.js.map": "/MomirBasic/static/js/3.fb035eae.chunk.js.map",
+    "index.html": "/MomirBasic/index.html",
+    "static/css/main.3a3e5a6f.chunk.css.map": "/MomirBasic/static/css/main.3a3e5a6f.chunk.css.map",
+    "static/js/2.f682ce06.chunk.js.LICENSE.txt": "/MomirBasic/static/js/2.f682ce06.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.dac82e02.js",
+    "static/js/2.f682ce06.chunk.js",
+    "static/css/main.3a3e5a6f.chunk.css",
+    "static/js/main.8aa4608b.chunk.js"
+  ]
+}
