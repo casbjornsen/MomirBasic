@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import {connect} from 'react-redux';
-import Modal from 'react-modal';
+import {useSelector, useDispatch} from 'react-redux';
 
 import Card from './Card';
 import CardStack from './CardStack';
@@ -11,94 +10,141 @@ import PlayerStore from '../stores/PlayerStore';
 
 import '../css/PlayerInterface.css';
 import CardService from '../services/CardService';
+import ContextClickHandler from './ContextClickHandler';
 
 function PlayerInterface (props) {
 
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const dispatch = useDispatch();
+    const player = useSelector(store => store.player);
+
     const [selectedCardIndex, setSelectedCardIndex] = useState(0);
     const [selectedCardZone, setSelectedCardZone] = useState('');
     const [selectedCmc, setSelectedCmc] = useState(0);
+    
+    const allValidMoveDestinations = [
+        {
+            name: "hand",
+            displayName: "Hand",
+            sendFunction: () => sendCardTo("hand")
+        },
+        {
+            name: "graveyard",
+            displayName: "Graveyard",
+            sendFunction:  () => sendCardTo("graveyard")
+        },
+        {
+            name: "librarytop",
+            displayName: "Top of Library",
+            sendFunction:  () => sendCardTo("librarytop")
+        },
+        {
+            name: "librarybottom",
+            displayName: "Bottom of Library",
+            sendFunction:  () => sendCardTo("librarybottom")
+        },
+        {
+            name: "creatures",
+            displayName: "Battlefield",
+            sendFunction:  () => sendCardTo("creatures")
+        },
+        {
+            name: "lands",
+            displayName: "Battlefield",
+            sendFunction:  () => sendCardTo("land")
+        }
+    ];
 
     const onLifeIncrementClick = () => {
-        props.onIncrementLife();
+        dispatch(PlayerStore.incrementLife());
     }
 
     const onLifeDecrementClick = () => {
-        props.onDecrementLife();
+        dispatch(PlayerStore.decrementLife());
     }
 
     const onUpdateMana = (newMana) => {
-        props.onUpdateMana(newMana);
+        dispatch(PlayerStore.updateMana(newMana));
     }
 
     const playLand = (index) => {
-        props.onPlayLand(index);
+        dispatch(PlayerStore.playLandFromHand(index));
     }
 
     const drawCard = () =>{
-        props.onDrawCard();
+        dispatch(PlayerStore.drawCardsFromLibrary(1));
     }
 
     const toggleTap = (index, zone) => {
-        props.onToggleTap(index, zone);
+        dispatch(PlayerStore.toggleTapCard(index, zone));
     }
 
-    const onOptionsClick = (index, zone) => {
+    const updateSelectedCard = (index, zone) => {
+        console.log(`Updating selection - index: ${index} zone: ${zone}`);
         setSelectedCardIndex(index);
         setSelectedCardZone(zone);
-        setModalIsOpen(true);
-    }
-
-    const onCloseModal = () => {
-        setModalIsOpen(false);
-    }
+    } 
 
     const sendCardTo = (destination) => {
-        props.sendCardToZone(selectedCardIndex, selectedCardZone, destination);
-        setModalIsOpen(false);
+        console.log(`Sending card to ${destination}... Source - index: ${selectedCardIndex} zone: ${selectedCardZone}`);
+        dispatch(PlayerStore.sendCardToZone(selectedCardIndex, selectedCardZone, destination));
     }
 
     const fetchTokenCreature = () => {
-        props.fetchCreatureToken(selectedCmc);
+        dispatch(PlayerStore.fetchCreatureToken(selectedCmc));
     }
 
-    const handEls = props.hand.map((x, idx) => {
-        if(x !== undefined)
-            return <Card key={idx} index={idx} imgSrc={x.image} name={x.name} zone="hand" onCardClick={playLand} isTapped={x.isTapped} onOptionsClick={onOptionsClick}/>
+    const handEls = player.hand.filter(x => x !== undefined).map((x, idx) => {
+        let cardId = x.name+'_'+idx;
+        let validMoveDestinations = [...allValidMoveDestinations];
+        validMoveDestinations.splice(0,1);
+        validMoveDestinations.splice(3,1);
+        return <ContextClickHandler
+                key={idx}
+                contents={<Card key={idx} id={cardId} index={idx} imgSrc={x.image} name={x.name} zone="hand" onCardClick={playLand} isTapped={x.isTapped}/>}
+                zoomEnabled={false}
+                targetId={cardId}
+                validMoveDestinations={validMoveDestinations}
+                contextHeader="Send Card To..."
+                onSelectCard={() => updateSelectedCard(idx, "hand")}
+        />
     })
-    const creatureEls = props.creaturesInPlay.map((x, idx) => {
-        if(x !== undefined)
-           return <Card key={idx} index={idx} imgSrc={x.image} name={x.name} zone="creatures" onCardClick={toggleTap} isTapped={x.isTapped} onOptionsClick={onOptionsClick}/>
+    const creatureEls = player.creatures.filter(x => x !== undefined).map((x, idx) => {
+            let cardId = x.name+'_'+idx;
+            let validMoveDestinations = [...allValidMoveDestinations];
+            validMoveDestinations.splice(4,2);
+            return <ContextClickHandler
+                    key={idx}
+                    contents={<Card key={idx} id={cardId} index={idx} imgSrc={x.image} name={x.name} zone="creatures" onCardClick={toggleTap} isTapped={x.isTapped}/>}
+                    zoomEnabled={true}
+                    zoomImage={x.zoomImage}
+                    targetId={cardId}
+                    validMoveDestinations={validMoveDestinations}
+                    contextHeader="Send Card To..."
+                    onSelectCard={() =>updateSelectedCard(idx, "creatures")}
+            />
     })
-    const landEls = props.landInPlay.map((x, idx) => {
-        if(x !== undefined)
-           return <Card key={idx} index={idx} imgSrc={x.image} name={x.name} zone="land" onCardClick={toggleTap} isTapped={x.isTapped} onOptionsClick={onOptionsClick}/>
+    const landEls = player.land.filter(x => x !== undefined).map((x, idx) => {
+        let cardId = x.name+'_'+idx;
+        let validMoveDestinations = [...allValidMoveDestinations];
+        validMoveDestinations.splice(4,2);
+        return <ContextClickHandler
+                key={idx}
+                contents={<Card key={idx} id={cardId} index={idx} imgSrc={x.image} name={x.name} zone="land" onCardClick={toggleTap} isTapped={x.isTapped}/>}
+                zoomEnabled={false}
+                targetId={cardId}
+                validMoveDestinations={validMoveDestinations}
+                contextHeader="Send Card To..."
+                onSelectCard={() =>updateSelectedCard(idx, "land")}
+        />
     })
 
     return (
         <div id="playerInterface" className="playerInterface">
-            <Modal 
-            isOpen={modalIsOpen}
-            appElement={document.getElementById('playerInterface')}
-            className="card-options-modal"
-            overlayClassName="card-options-overlay"
-            >
-                <div className="modal-button-container">
-                    Send card to...
-                    <button className={selectedCardZone === "graveyard" ? "hidden" : ""} onClick={() => sendCardTo("graveyard")}>Graveyard</button>
-                    <button className={selectedCardZone === "hand" ? "hidden" : ""} onClick={() => sendCardTo("hand")}>Hand</button>
-                    <button className={selectedCardZone === "library" ? "hidden" : ""} onClick={() => sendCardTo("librarytop")}>Top of Library</button>
-                    <button className={selectedCardZone === "library" ? "hidden" : ""} onClick={() => sendCardTo("librarybottom")}>Bottom of Library</button>
-                    <button className={selectedCardZone === "land" || selectedCardZone == "creatures"? "hidden" : ""} onClick={() => sendCardTo("land")}> Battlefield</button>
-                    <br />
-                    <button onClick={onCloseModal}>Close</button>
-                </div>
-            </Modal>
             <div className="battlefield">
                 <CardZone cards={creatureEls} name="battlefield-creatures"/>
                 <div className="land-row-container">
                     <div className="card momir-container">
-                        <img src={CardService.momirAvatarImage} />
+                        <img src={CardService.momirAvatarImage} alt="Momir Vanguard"/>
                         <div className="momir-input-container">
                             <div className="momir-rules">
                                 <span>X, Discard a card:</span>
@@ -118,51 +164,39 @@ function PlayerInterface (props) {
             <div className="playerSpace">
                 <div className="playerStats">
                     <LifeTracker
-                        lifeTotal={props.lifeTotal}
+                        lifeTotal={player.lifeTotal}
                         onLifeIncrementClick = {onLifeIncrementClick}
                         onLifeDecrementClick = {onLifeDecrementClick}
                     />
                     <ManaPool
-                        white={props.manaPool.white}
-                        blue={props.manaPool.blue}
-                        black={props.manaPool.black}
-                        red={props.manaPool.red}
-                        green={props.manaPool.green}
-                        colorless={props.manaPool.colorless}
+                        white={player.manaPool.white}
+                        blue={player.manaPool.blue}
+                        black={player.manaPool.black}
+                        red={player.manaPool.red}
+                        green={player.manaPool.green}
+                        colorless={player.manaPool.colorless}
                         onUpdateMana={onUpdateMana}/>
                 </div>
                 <CardZone name="hand" cards={handEls}/>
-                <CardStack name="library" contents={props.library} isTopRevealed={false} onClick={drawCard} onOptionsClick={onOptionsClick}/>
-                <CardStack name="graveyard" contents={props.graveyard} isTopRevealed={true} onClick={onOptionsClick} onOptionsClick={onOptionsClick}/>
+                <ContextClickHandler
+                contents={<CardStack id={"library_top"} name="library" contents={player.library} isTopRevealed={false} onClick={drawCard} />}
+                zoomEnabled={false}
+                targetId={"library_top"}
+                validMoveDestinations={[...allValidMoveDestinations.slice(0,1), ...allValidMoveDestinations.slice(3,4), ...allValidMoveDestinations.slice(5)]}
+                contextHeader="Send Card To..."
+                onSelectCard={() => updateSelectedCard(0, "library")}
+                />
+                <ContextClickHandler
+                contents={<CardStack id={"graveyard_top"} name="graveyard" contents={player.graveyard} isTopRevealed={true}/>}
+                zoomEnabled={false}
+                targetId={"graveyard_top"}
+                validMoveDestinations={[...allValidMoveDestinations.slice(0,0), ...allValidMoveDestinations.slice(2,4), ...allValidMoveDestinations.slice(5)]}
+                contextHeader="Send Card To..."
+                onSelectCard={() => updateSelectedCard(0, "graveyard")}
+                />
             </div>
         </div>
     );
 }
 
-const mapStateToProps = (store) => {
-    return {
-        playerName: store.player.playerName,
-        hand: store.player.hand,
-        library: store.player.library,
-        graveyard: store.player.graveyard,
-        creaturesInPlay: store.player.creatures,
-        landInPlay: store.player.land,
-        lifeTotal: store.player.lifeTotal,
-        manaPool: store.player.manaPool
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        onIncrementLife: () => dispatch(PlayerStore.incrementLife()),
-        onDecrementLife: () => dispatch(PlayerStore.decrementLife()),
-        onUpdateMana: (mana) => dispatch(PlayerStore.updateMana(mana)),
-        onPlayLand: (index) => dispatch(PlayerStore.playLandFromHand(index)),
-        onDrawCard: () => dispatch(PlayerStore.drawCardsFromLibrary(1)),
-        onToggleTap: (index, zone) => dispatch(PlayerStore.toggleTapCard(index, zone)),
-        sendCardToZone: (index, fromZone, toZone) => dispatch(PlayerStore.sendCardToZone(index, fromZone, toZone)),
-        fetchCreatureToken: (cmc) => dispatch(PlayerStore.fetchCreatureToken(cmc))
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlayerInterface);
+export default PlayerInterface;

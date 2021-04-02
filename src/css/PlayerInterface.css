@@ -29,21 +29,6 @@
     padding: 5px;
 }
 
-.card-options-modal{
-    color:white;
-    position: absolute;
-    top: 40vh;
-    left: 40vw;
-    right: 40vw;
-    bottom: 40vh;
-    background: rgba(128, 128, 128, 1);
-    border-radius: 4px;
-}
-
-.card-options-modal button{
-    width:80%;
-}
-
 .card-options-overlay{
     position: fixed;
     top: 0;
@@ -224,6 +209,24 @@
     justify-content: space-evenly;
 }
 
-.tapped img{
-    transform: rotate(90deg)
+.right-click-context{
+    color:white;
+    width: 8vw;
+    background: rgba(128, 128, 128, 1);
+    border-radius: 4px;
+    padding-bottom: 20px;
+}
+
+.right-click-context button{
+    width:80%;
+}
+.tapped{
+    transform: rotate(90deg);
+    width: 11.2vw;
+}
+
+.zoomImage{
+    width: 16vw;
+    height: 22.4vw;
+    padding: 5px;
 }

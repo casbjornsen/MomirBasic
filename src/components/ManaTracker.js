@@ -10,7 +10,7 @@ function ManaTracker(props){
                 <UpTriangle width="25" height="25" color="white"/>
             </button>
             <div className="mana-count-container">
-                <img src={props.manaIcon} />
+                <img src={props.manaIcon} alt=""/>
                 <div className="mana-count">
                     {props.manaCount}
                 </div>

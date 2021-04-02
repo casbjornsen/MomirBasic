@@ -253,6 +253,7 @@ const reducer = (state = defaultState, action) => {
                                 hand
                             }
                         }
+                        default: return state;
                     }
                 }
                 case "land":{
@@ -269,7 +270,7 @@ const reducer = (state = defaultState, action) => {
                             }
                         }
                         case "hand":{
-                            const hand = [...state.graveyard, card];
+                            const hand = [...state.hand, card];
                             return{
                                 ...state,
                                 hand,
@@ -318,7 +319,7 @@ const reducer = (state = defaultState, action) => {
                             }
                         }
                         case "hand":{
-                            const hand = [...state.graveyard, card];
+                            const hand = [...state.hand, card];
                             return{
                                 ...state,
                                 hand,
@@ -376,6 +377,7 @@ const reducer = (state = defaultState, action) => {
                         default : return state;
                     }
                 }
+                default: return state;
             }
         }
         case 'FETCH_CREATURE_TOKEN':{
@@ -388,6 +390,7 @@ const reducer = (state = defaultState, action) => {
             const creature = {
                 name: action.payload.name,
                 image: action.payload.image_uris.normal,
+                zoomImage: action.payload.image_uris.large,
                 isTapped: false
             }
             const creatures = [...state.creatures, creature];

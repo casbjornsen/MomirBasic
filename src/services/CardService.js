@@ -20,7 +20,7 @@ export default class CardService {
     static momirAvatarImage = "https://c1.scryfall.com/file/scryfall-cards/large/front/f/5/f5ed5ad3-b970-4720-b23b-308a25f42887.jpg?1562953277"
 
     async getRandomCreature(cmc){
-        const url = `https://api.scryfall.com/cards/random?q=cmc%3D${cmc}%20type%3Acreature`
+        const url = `https://api.scryfall.com/cards/random?q=cmc%3D${cmc}%20type%3Acreature%20-border%3Asilver%20-border%3Agold`
         
         const result = await axios.get(url);
 

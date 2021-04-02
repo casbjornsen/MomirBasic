@@ -59,6 +59,7 @@ function PlayerSetup(props) {
 
     const landInputEls = landInputs.map((x, idx) => {
         return <ImageInput
+        key={idx}
         imgSrc={x.image}
         imgAlt={x.name}
         inputType="number"
